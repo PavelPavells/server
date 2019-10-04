@@ -7,7 +7,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.status(200).json({"key": "No data"});
+    res.status(200).send("Сервер успешно загружен, добавьте '/bolid' в адресную строку и нажмите Enter, чтобы обрабатывать запросы.");
 })
 
 app.get('/', (req, res) => {
@@ -21,10 +21,10 @@ app.use((err, req, res, next) => {
 
 app.post("/bolid", (req, res, next) => {
     console.log(req.body);
-    if(typeof req.body == 'undefined' || req.body == null) {
-        res.status(200).json({"key": "no data"});
-    } else {
-        res.json(req.body);
+    if(typeof req.body.content == 'undefined' || req.body.content == null) {
+        res.status(400).send({"key": "no data"});
+    } else if(req.body.data) {
+        res.status(200).json("data", req.body.data);
     }
  });
 
